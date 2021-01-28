@@ -1,0 +1,13 @@
+<h3>{{ title }}</h3>
+<div style="display: block">
+  <canvas
+    baseChart
+    [data]="doughnutChartData"
+    [labels]="chartLabels"
+    [colors]="colors"
+    [chartType]="graph"
+    [datasets]="radarChartData"
+    [options]="radarChartOptions"
+  >
+  </canvas>
+</div>

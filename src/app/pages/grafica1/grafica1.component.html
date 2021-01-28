@@ -1,1 +1,28 @@
-<p>grafica1 works!</p>
+<div class="row">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <app-graph
+          title="Sales"
+          graph="doughnut"
+          [chartLabels]="doughnutChartLabels"
+          [doughnutChartData]="doughnutChartData"
+          [colors]="colors"
+        ></app-graph>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <app-graph
+          title="Report"
+          graph="radar"
+          [chartLabels]="radarChartLabels"
+          [radarChartOptions]="radarChartOptions"
+          [radarChartData]="radarChartData"
+        ></app-graph>
+      </div>
+    </div>
+  </div>
+</div>
