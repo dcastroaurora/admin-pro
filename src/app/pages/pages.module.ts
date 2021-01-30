@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from '../components/components.module';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ComponentsModule } from '../components/components.module';
     DashboardComponent,
     Grafica1Component,
     PagesComponent,
+    AccountSettingsComponent,
   ],
   imports: [
     CommonModule,
@@ -23,11 +25,11 @@ import { ComponentsModule } from '../components/components.module';
     FormsModule,
     ComponentsModule,
   ],
-  exports: [
-    ProgressComponent,
-    DashboardComponent,
-    Grafica1Component,
-    PagesComponent,
-  ],
+  // exports: [
+  //   ProgressComponent,
+  //   DashboardComponent,
+  //   Grafica1Component,
+  //   PagesComponent,
+  // ],
 })
 export class PagesModule {}
