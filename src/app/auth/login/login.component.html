@@ -8,31 +8,41 @@
       <form
         id="loginform"
         class="form-horizontal form-material"
-        (ngSubmit)="logIn()"
+        [formGroup]="loginForm"
+        (ngSubmit)="ngSubmit()"
       >
         <a href="javascript:void(0)" class="text-center db"
           ><img src="./assets/images/logo-icon.png" alt="Home" /><br /><img
             src="./assets/images/logo-text.png"
             alt="Home"
         /></a>
-        <div class="form-group m-t-40">
+        <div class="form-group m-t-40" [ngClass]="{ 'has-danger': validEmail }">
           <div class="col-xs-12">
             <input
               class="form-control"
-              type="text"
-              required=""
-              placeholder="Username"
+              type="email"
+              placeholder="Email"
+              formControlName="email"
             />
+            <div class="form-control-feedback" *ngIf="validEmailRequired">
+              Email is required.
+            </div>
+            <div class="form-control-feedback" *ngIf="validGmailFormat">
+              Inválid email format.
+            </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{ 'has-danger': validPassword }">
           <div class="col-xs-12">
             <input
               class="form-control"
               type="password"
-              required=""
               placeholder="Password"
+              formControlName="password"
             />
+            <div class="form-control-feedback" *ngIf="validPassword">
+              Password is required.
+            </div>
           </div>
         </div>
         <div class="form-group row">
@@ -42,6 +52,7 @@
                 id="checkbox-signup"
                 type="checkbox"
                 class="filled-in chk-col-light-blue"
+                formControlName="remember"
               />
               <label for="checkbox-signup"> Remember me </label>
             </div>
@@ -58,6 +69,7 @@
             <button
               class="btn btn-info btn-lg btn-block text-uppercase btn-rounded"
               type="submit"
+              [disabled]="loginForm.invalid"
             >
               Log In
             </button>
@@ -66,22 +78,24 @@
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
             <div class="social">
-              <a
+              <!-- <a
                 href="javascript:void(0)"
                 class="btn btn-facebook"
                 data-toggle="tooltip"
                 title="Login with Facebook"
               >
                 <i aria-hidden="true" class="fa fa-facebook"></i>
-              </a>
-              <a
+              </a> -->
+              <div id="signin-google"></div>
+
+              <!-- <a
                 href="javascript:void(0)"
                 class="btn btn-googleplus"
                 data-toggle="tooltip"
                 title="Login with Google"
               >
                 <i aria-hidden="true" class="fa fa-google-plus"></i>
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
@@ -96,4 +110,19 @@
       </form>
     </div>
   </div>
+  <pre>
+    {{ loginForm.value | json }}
+  </pre>
+  <pre>
+    status: {{ loginForm.status }}
+</pre
+  >
+  <pre>
+    valid: {{ loginForm.valid }}
+</pre
+  >
+  <pre>
+    invalid: {{ loginForm.invalid }}
+</pre
+  >
 </section>

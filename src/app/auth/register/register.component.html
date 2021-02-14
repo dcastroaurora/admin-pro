@@ -6,9 +6,10 @@
   <div class="login-box card">
     <div class="card-body">
       <form
-        class="form-horizontal form-material"
         id="loginform"
-        action="index.html"
+        class="form-horizontal form-material"
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
       >
         <a href="javascript:void(0)" class="text-center db"
           ><img src="../assets/images/logo-icon.png" alt="Home" /><br /><img
@@ -16,54 +17,76 @@
             alt="Home"
         /></a>
         <h3 class="box-title m-t-40 m-b-0">Register Now</h3>
-        <small>Create your account and enjoy</small>
-        <div class="form-group m-t-20">
+        <!-- <small>Create your account and enjoy</small> -->
+        <div class="form-group m-t-20" [ngClass]="{ 'has-danger': validName }">
           <div class="col-xs-12">
             <input
-              class="form-control"
               type="text"
-              required=""
+              class="form-control"
               placeholder="Name"
+              formControlName="name"
             />
+            <div class="form-control-feedback" *ngIf="validName">
+              Name is required.
+            </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{ 'has-danger': validEmail }">
           <div class="col-xs-12">
             <input
               class="form-control"
               type="text"
-              required=""
               placeholder="Email"
+              formControlName="email"
             />
+            <div class="form-control-feedback" *ngIf="validEmail">
+              Email is required.
+            </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{ 'has-danger': validPassword }">
           <div class="col-xs-12">
             <input
               class="form-control"
               type="password"
-              required=""
               placeholder="Password"
+              formControlName="password"
             />
+            <div class="form-control-feedback" *ngIf="validPassword">
+              Password is required.
+            </div>
           </div>
         </div>
-        <div class="form-group">
+        <div
+          class="form-group"
+          [ngClass]="{ 'has-danger': validConfirmPassword }"
+        >
           <div class="col-xs-12">
             <input
               class="form-control"
               type="password"
-              required=""
               placeholder="Confirm Password"
+              formControlName="confirmPassword"
             />
+            <div class="form-control-feedback" *ngIf="validConfirmPassword">
+              Confirm Password is required.
+            </div>
           </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row" [ngClass]="{ 'has-danger': validTerms }">
           <div class="col-md-12">
             <div class="checkbox checkbox-primary p-t-0">
-              <input id="checkbox-signup" type="checkbox" />
+              <input
+                id="checkbox-signup"
+                type="checkbox"
+                formControlName="terms"
+              />
               <label for="checkbox-signup">
                 I agree to all <a href="#">Terms</a></label
               >
+            </div>
+            <div class="form-control-feedback" *ngIf="validTerms">
+              Terms is required.
             </div>
           </div>
         </div>
@@ -72,6 +95,7 @@
             <button
               class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
               type="submit"
+              [disabled]="!(terms?.value && registerForm.valid)"
             >
               Sign Up
             </button>
@@ -88,4 +112,19 @@
       </form>
     </div>
   </div>
+  <pre>
+    values:{{ registerForm.value | json }}
+  </pre>
+  <pre>
+    status: {{ registerForm.status }}
+</pre
+  >
+  <pre>
+    valid: {{ registerForm.valid }}
+</pre
+  >
+  <pre>
+    invalid: {{ registerForm.invalid }}
+</pre
+  >
 </section>
