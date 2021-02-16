@@ -3,9 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 import { CustomValidations } from 'src/app/utils/custom-validations';
-import { RegisterService } from '../auth-shared/providers/register.service';
-import { User } from '../auth-shared/interfaces/user.interface';
-import { UserModel } from '../auth-shared/models/user.model';
+import { UserService } from '../auth-shared/providers/user.service';
 import { Router } from '@angular/router';
 declare function customInitFunction(): any;
 
@@ -19,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private registerService: RegisterService,
+    private userService: UserService,
     private router: Router
   ) {
     this.createForm();
@@ -105,11 +103,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registerForm);
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
-      this.registerService.createUser(this.registerForm.value).subscribe(
+      this.userService.createUser(this.registerForm.value).subscribe(
         () => {
           this.router.navigateByUrl('/dashboard');
         },

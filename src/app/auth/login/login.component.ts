@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UserModel } from '../auth-shared/models/user.model';
-import { LoginService } from '../auth-shared/providers/login.service';
+import { UserService } from '../auth-shared/providers/user.service';
 declare function customInitFunction(): any;
 declare const gapi: any;
 
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private loginService: LoginService,
+    private userService: UserService,
     private ngZone: NgZone
   ) {
     this.createForm();
@@ -42,11 +42,10 @@ export class LoginComponent implements OnInit {
     body?.removeAttribute('class');
   }
 
-  ngSubmit() {
-    console.log(this.loginForm);
+  logIn() {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
-      this.loginService.login(this.loginForm.value).subscribe(
+      this.userService.login(this.loginForm.value).subscribe(
         () => {
           if (this.remember?.value) {
             localStorage.setItem('email', this.email?.value);
@@ -119,8 +118,8 @@ export class LoginComponent implements OnInit {
   }
 
   async startApp() {
-    await this.loginService.googleInit();
-    this.auth2 = this.loginService.auth2;
+    await this.userService.googleInit();
+    this.auth2 = this.userService.auth2;
     this.attachSignin(document.getElementById('signin-google'));
   }
 
@@ -131,14 +130,13 @@ export class LoginComponent implements OnInit {
       (googleUser: any) => {
         var token = googleUser.getAuthResponse().id_token;
 
-        this.loginService.loginGoogle(token).subscribe(
+        this.userService.loginGoogle(token).subscribe(
           () => {
             this.ngZone.run(() => {
               this.router.navigateByUrl('/dashboard');
             });
           },
           (error) => {
-            console.log(error);
             Swal.fire('Error', error.error.message, 'error');
           }
         );

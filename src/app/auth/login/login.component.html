@@ -9,7 +9,7 @@
         id="loginform"
         class="form-horizontal form-material"
         [formGroup]="loginForm"
-        (ngSubmit)="ngSubmit()"
+        (ngSubmit)="logIn()"
       >
         <a href="javascript:void(0)" class="text-center db"
           ><img src="./assets/images/logo-icon.png" alt="Home" /><br /><img
@@ -110,19 +110,4 @@
       </form>
     </div>
   </div>
-  <pre>
-    {{ loginForm.value | json }}
-  </pre>
-  <pre>
-    status: {{ loginForm.status }}
-</pre
-  >
-  <pre>
-    valid: {{ loginForm.valid }}
-</pre
-  >
-  <pre>
-    invalid: {{ loginForm.invalid }}
-</pre
-  >
 </section>
