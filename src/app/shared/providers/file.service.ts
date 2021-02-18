@@ -13,7 +13,7 @@ export class FileService {
   updatePicture(
     file: File,
     collection: string,
-    id: string
+    id?: string
   ): Observable<FileModel> {
     const data = new FormData();
     data.append('image', file);

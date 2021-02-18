@@ -2,8 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { UserModel } from '../auth-shared/models/user.model';
-import { UserService } from '../auth-shared/providers/user.service';
+import { AuthService } from '../auth-shared/providers/auth.service';
 declare function customInitFunction(): any;
 declare const gapi: any;
 
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private ngZone: NgZone
   ) {
     this.createForm();
@@ -45,7 +44,7 @@ export class LoginComponent implements OnInit {
   logIn() {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
-      this.userService.login(this.loginForm.value).subscribe(
+      this.authService.login(this.loginForm.value).subscribe(
         () => {
           if (this.remember?.value) {
             localStorage.setItem('email', this.email?.value);
@@ -118,8 +117,8 @@ export class LoginComponent implements OnInit {
   }
 
   async startApp() {
-    await this.userService.googleInit();
-    this.auth2 = this.userService.auth2;
+    await this.authService.googleInit();
+    this.auth2 = this.authService.auth2;
     this.attachSignin(document.getElementById('signin-google'));
   }
 
@@ -130,7 +129,7 @@ export class LoginComponent implements OnInit {
       (googleUser: any) => {
         var token = googleUser.getAuthResponse().id_token;
 
-        this.userService.loginGoogle(token).subscribe(
+        this.authService.loginGoogle(token).subscribe(
           () => {
             this.ngZone.run(() => {
               this.router.navigateByUrl('/dashboard');

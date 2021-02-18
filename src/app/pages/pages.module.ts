@@ -7,9 +7,13 @@ import { PagesComponent } from './pages.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ComponentsModule } from '../components/components.module';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './maintainers/users/users.component';
+import { DoctorsComponent } from './maintainers/doctors/doctors.component';
+import { HospitalsComponent } from './maintainers/hospitals/hospitals.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -19,14 +23,18 @@ import { ProfileComponent } from './profile/profile.component';
     PagesComponent,
     AccountSettingsComponent,
     ProfileComponent,
+    UsersComponent,
+    DoctorsComponent,
+    HospitalsComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule,
     FormsModule,
-    ComponentsModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    NgxPaginationModule,
   ],
   // exports: [
   //   ProgressComponent,

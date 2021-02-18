@@ -12,7 +12,7 @@
             class="has-arrow waves-effect waves-dark"
             href="#"
             aria-expanded="false"
-            ><img [src]="userService.getUserImage" alt="user" /><span
+            ><img [src]="user.getUserPicture" alt="user" /><span
               class="hide-menu"
               >{{ user.name | slice: 0:15
               }}{{ user.name.length > 15 ? "..." : "" }}

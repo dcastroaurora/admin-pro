@@ -6,16 +6,16 @@ import {
   Router,
 } from '@angular/router';
 import { tap } from 'rxjs/operators';
-import { UserService } from '../auth/auth-shared/providers/user.service';
+import { AuthService } from '../auth/auth-shared/providers/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.userService.validateToken().pipe(
+    return this.authService.validateToken().pipe(
       tap((res: boolean) => {
         if (!res) this.router.navigateByUrl('/login');
       })

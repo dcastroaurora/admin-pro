@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/auth/auth-shared/interfaces/user.interface';
-import { UserModel } from 'src/app/auth/auth-shared/models/user.model';
-import { UserService } from 'src/app/auth/auth-shared/providers/user.service';
+import { User } from 'src/app/auth/auth-shared/models/user.model';
+import { IAuth } from 'src/app/auth/auth-shared/interfaces/auth.interface';
+import { AuthService } from 'src/app/auth/auth-shared/providers/auth.service';
 import { FileModel } from 'src/app/shared/models/file.model';
 import { FileService } from 'src/app/shared/providers/file.service';
 import Swal from 'sweetalert2';
@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public userService: UserService,
+    public authService: AuthService,
     private fileService: FileService
   ) {
     this.setUserData();
@@ -28,11 +28,10 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.createProfileForm();
-    // this.urlPicture = this.userService.getUserImage();
   }
 
   setUserData() {
-    this.user = this.userService.user;
+    this.user = this.authService.user;
   }
 
   createProfileForm() {
@@ -45,8 +44,8 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    this.userService.updateProfile(this.profileForm.value).subscribe(
-      (res: UserModel) => {
+    this.authService.updateProfile(this.profileForm.value).subscribe(
+      (res: IAuth) => {
         const { name, email } = res.user;
         this.user.name = name;
         this.user.email = email;

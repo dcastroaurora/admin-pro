@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/auth/auth-shared/interfaces/user.interface';
-import { UserService } from 'src/app/auth/auth-shared/providers/user.service';
+import { User } from 'src/app/auth/auth-shared/models/user.model';
+import { AuthService } from 'src/app/auth/auth-shared/providers/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,23 +9,17 @@ import { UserService } from 'src/app/auth/auth-shared/providers/user.service';
 })
 export class HeaderComponent implements OnInit {
   user!: User;
-  image: string = '';
-  constructor(public userService: UserService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.setUserData();
-    // this.showUserImage();
   }
 
   setUserData() {
-    this.user = this.userService.user;
+    this.user = this.authService.user;
   }
 
-  // showUserImage() {
-  // this.image = this.userService.getUserImage();
-  // }
-
   logout() {
-    this.userService.logout();
+    this.authService.logout();
   }
 }

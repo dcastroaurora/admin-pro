@@ -27,24 +27,20 @@ export class SidebarService {
           ],
         },
         {
-          title: 'Workshops',
-          icon: 'mdi mdi-bullseye',
+          title: 'Maintainers',
+          icon: 'mdi mdi-folder-lock-open',
           submenus: [
             {
-              title: 'Canvan',
-              url: '/',
+              title: 'Users',
+              url: 'users',
             },
             {
-              title: 'TEA',
-              url: '',
+              title: 'Hospitals',
+              url: 'hospitals',
             },
             {
-              title: 'Google Fonts',
-              url: '',
-            },
-            {
-              title: 'Comportamientos',
-              url: '',
+              title: 'Doctors',
+              url: 'doctors',
             },
           ],
         },

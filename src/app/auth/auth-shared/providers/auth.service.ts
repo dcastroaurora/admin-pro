@@ -4,16 +4,16 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { User } from '../interfaces/user.interface';
-import { UserModel } from '../models/user.model';
+import { User } from '../models/user.model';
+import { IAuth } from '../interfaces/auth.interface';
 
 declare const gapi: any;
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
-  public user!: User;
+export class AuthService {
+  user!: User;
   auth2: any;
 
   constructor(
@@ -37,21 +37,21 @@ export class UserService {
     });
   }
 
-  login(data: User): Observable<UserModel> {
+  login(data: User): Observable<IAuth> {
     return this.http
-      .post<UserModel>(`${environment.base_url}/auth/login`, data)
+      .post<IAuth>(`${environment.base_url}/auth/login`, data)
       .pipe(
-        tap((res: UserModel) => {
+        tap((res: IAuth) => {
           localStorage.setItem('token', res.token);
         })
       );
   }
 
-  loginGoogle(token: string): Observable<UserModel> {
+  loginGoogle(token: string): Observable<IAuth> {
     return this.http
-      .post<UserModel>(`${environment.base_url}/auth/google`, { token })
+      .post<IAuth>(`${environment.base_url}/auth/google`, { token })
       .pipe(
-        tap((res: UserModel) => {
+        tap((res: IAuth) => {
           localStorage.setItem('token', res.token);
         })
       );
@@ -63,14 +63,15 @@ export class UserService {
 
   validateToken(): Observable<boolean> {
     return this.http
-      .get<UserModel>(`${environment.base_url}/auth/renewToken`, {
+      .get<IAuth>(`${environment.base_url}/auth/renewToken`, {
         headers: {
           'x-token': this.token,
         },
       })
       .pipe(
-        map((res: UserModel) => {
-          this.user = res.user;
+        map((res: IAuth) => {
+          const { email, google, id, image, name, role } = res.user;
+          this.user = new User(name, email, id, '', image, google, role);
           localStorage.setItem('token', res.token);
           return true;
         }),
@@ -87,25 +88,16 @@ export class UserService {
     });
   }
 
-  get getUserImage() {
-    if (this.user?.google) return this.user.image;
-    if (this.user?.image) {
-      return `${environment.base_url}/upload/user/${this.user?.image}`;
-    } else {
-      return `${environment.base_url}/upload/user/no-image`;
-    }
-  }
-
-  createUser(data: User): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.base_url}/user`, data).pipe(
-      tap((res: UserModel) => {
+  createUser(data: User): Observable<IAuth> {
+    return this.http.post<IAuth>(`${environment.base_url}/user`, data).pipe(
+      tap((res: IAuth) => {
         localStorage.setItem('token', res.token);
       })
     );
   }
 
-  updateProfile(data: User): Observable<UserModel> {
-    return this.http.put<UserModel>(
+  updateProfile(data: User): Observable<IAuth> {
+    return this.http.put<IAuth>(
       `${environment.base_url}/user/${data.id}`,
       data,
       {

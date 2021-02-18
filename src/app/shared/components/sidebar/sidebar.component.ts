@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/auth/auth-shared/interfaces/user.interface';
-import { UserService } from 'src/app/auth/auth-shared/providers/user.service';
+import { User } from 'src/app/auth/auth-shared/models/user.model';
+import { AuthService } from 'src/app/auth/auth-shared/providers/auth.service';
 import { SidebarService } from 'src/app/pages/pages-shared/providers/sidebar/sidebar.service';
 
 @Component({
@@ -11,24 +11,18 @@ import { SidebarService } from 'src/app/pages/pages-shared/providers/sidebar/sid
 export class SidebarComponent implements OnInit {
   menuItems: any[] = [];
   user!: User;
-  // image: string = '';
 
   constructor(
     private sidebarService: SidebarService,
-    public userService: UserService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.menuItems = this.sidebarService.menu;
     this.setUserData();
-    // this.showUserImage();
   }
 
   setUserData() {
-    this.user = this.userService.user;
+    this.user = this.authService.user;
   }
-
-  // showUserImage() {
-  // this.image = this.userService.getUserImage();
-  // }
 }

@@ -315,17 +315,14 @@
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-            ><img
-              [src]="userService.getUserImage"
-              alt="user"
-              class="profile-pic"
+            ><img [src]="user.getUserPicture" alt="user" class="profile-pic"
           /></a>
           <div class="dropdown-menu dropdown-menu-right animated fadeIn fast">
             <ul class="dropdown-user">
               <li>
                 <div class="dw-user-box">
                   <div class="u-img">
-                    <img [src]="userService.getUserImage" alt="user" />
+                    <img [src]="user.getUserPicture" alt="user" />
                   </div>
                   <div class="u-text">
                     <h4>

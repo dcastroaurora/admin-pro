@@ -7,6 +7,9 @@ import { ProgressComponent } from './progress/progress.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './maintainers/users/users.component';
+import { HospitalsComponent } from './maintainers/hospitals/hospitals.component';
+import { DoctorsComponent } from './maintainers/doctors/doctors.component';
 
 const routes: Routes = [
   {
@@ -31,7 +34,21 @@ const routes: Routes = [
         component: ProfileComponent,
         data: { title: 'User Profile' },
       },
-      // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+      {
+        path: 'users',
+        component: UsersComponent,
+        data: { title: 'User Maintainer' },
+      },
+      {
+        path: 'hospitals',
+        component: HospitalsComponent,
+        data: { title: 'Hospital Maintainer' },
+      },
+      {
+        path: 'doctors',
+        component: DoctorsComponent,
+        data: { title: 'Doctor Maintainer' },
+      },
     ],
   },
 ];
