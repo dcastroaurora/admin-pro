@@ -27,11 +27,7 @@
         <div class="modal-body">
           <div class="text-center">
             <img
-              [src]="
-                imageModalService.user !== undefined
-                  ? imageModalService.user.getUserPicture
-                  : ''
-              "
+              [src]="imageModalService.image | image: imageModalService.type"
               width="200"
               height="200"
               *ngIf="!pictureTemp"

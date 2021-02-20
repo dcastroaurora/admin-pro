@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { IAuth } from 'src/app/auth/auth-shared/interfaces/auth.interface';
 import { User } from 'src/app/auth/auth-shared/models/user.model';
 import { AuthService } from 'src/app/auth/auth-shared/providers/auth.service';
@@ -12,7 +13,7 @@ import { UserService } from '../../pages-shared/providers/maintainers/user/user.
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = [];
   name: string = '';
   page = 1;
@@ -20,15 +21,26 @@ export class UsersComponent implements OnInit {
   pageSize = 5;
   pageSizes = [3, 6, 9];
   loading: boolean = false;
+  imageSubscription: Subscription = new Subscription();
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private imageModalService: ImageModalService
   ) {}
+  ngOnDestroy(): void {
+    this.imageSubscription.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.getUsers();
+    this.changeImageListener();
+  }
+
+  changeImageListener() {
+    this.imageSubscription = this.imageModalService.newImage.subscribe(() => {
+      this.getUsers();
+    });
   }
 
   getUsers() {
@@ -36,9 +48,9 @@ export class UsersComponent implements OnInit {
     this.userService
       .getUsers({ name: this.name, size: this.pageSize, page: this.page })
       .subscribe(
-        (res: Pagination) => {
-          const { users, totalItems } = res;
-          this.users = users;
+        (res: Pagination<User>) => {
+          const { data, totalItems } = res;
+          this.users = data;
           this.count = totalItems;
           this.loading = false;
         },
@@ -91,6 +103,6 @@ export class UsersComponent implements OnInit {
   }
 
   openModal(user: User) {
-    this.imageModalService.openModal(user);
+    this.imageModalService.openModal('user', user.image, user.id);
   }
 }

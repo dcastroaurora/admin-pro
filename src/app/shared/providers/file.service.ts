@@ -13,13 +13,13 @@ export class FileService {
   updatePicture(
     file: File,
     collection: string,
-    id?: string
+    idCollection?: string
   ): Observable<FileModel> {
     const data = new FormData();
     data.append('image', file);
 
     return this.http.post<FileModel>(
-      `${environment.base_url}/upload/${collection}/${id}`,
+      `${environment.base_url}/upload/${collection}/${idCollection}`,
       data,
       {
         headers: {

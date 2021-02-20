@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { User } from 'src/app/auth/auth-shared/models/user.model';
+import { AuthService } from 'src/app/auth/auth-shared/providers/auth.service';
 import Swal from 'sweetalert2';
 import { FileModel } from '../../models/file.model';
 import { FileService } from '../../providers/file.service';
@@ -19,7 +19,8 @@ export class ImageModalComponent implements OnInit {
 
   constructor(
     public imageModalService: ImageModalService,
-    private fileService: FileService
+    private fileService: FileService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {}
@@ -47,16 +48,29 @@ export class ImageModalComponent implements OnInit {
   }
 
   uploadPicture() {
-    this.fileService
-      .updatePicture(this.picture, 'user', this.imageModalService.user.id)
-      .subscribe(
-        (res: FileModel) => {
-          this.imageModalService.user.image = res.fileName;
-          Swal.fire('Saved', 'Updated picture', 'success');
-        },
-        (error) => {
-          Swal.fire('Error', error.error.message, 'error');
-        }
-      );
+    const type = this.imageModalService.type;
+    const idCollection = this.imageModalService.id;
+
+    this.fileService.updatePicture(this.picture, type, idCollection).subscribe(
+      (res: FileModel) => {
+        Swal.fire('Saved', 'Updated picture', 'success');
+        this.imageModalService.newImage.emit(res.fileName);
+        this.checkImageLoggedUserUpdated(type, res.fileName, idCollection);
+        this.closeModal();
+      },
+      (error) => {
+        Swal.fire('Error', error.error.message, 'error');
+      }
+    );
+  }
+
+  checkImageLoggedUserUpdated(
+    type: string,
+    fileName: string,
+    idCollection?: string
+  ) {
+    if (type === 'user' && idCollection === this.authService.user.id) {
+      this.authService.user.image = fileName;
+    }
   }
 }

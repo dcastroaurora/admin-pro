@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import { User } from 'src/app/auth/auth-shared/models/user.model';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImageModalService {
   private _hideModal: boolean = true;
-  user!: User;
-  id: string = '';
+  id?: string = '';
   type: string = '';
-  image: string = '';
+  image?: string = '';
+  newImage: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}
 
@@ -17,9 +16,11 @@ export class ImageModalService {
     return this._hideModal;
   }
 
-  openModal(user: User) {
+  openModal(type: string, image?: string, id?: string) {
     this._hideModal = false;
-    this.user = user;
+    this.id = id;
+    this.type = type;
+    this.image = image;
   }
 
   closeModal() {

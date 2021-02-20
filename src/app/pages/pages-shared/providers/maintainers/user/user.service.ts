@@ -12,17 +12,17 @@ import { Pagination } from '../../../interfaces/pagination.interface';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getUsers(params: any): Observable<Pagination> {
+  getUsers(params: any): Observable<Pagination<User>> {
     return this.http
-      .get<Pagination>(`${environment.base_url}/user`, {
+      .get<Pagination<User>>(`${environment.base_url}/user`, {
         headers: {
           'x-token': localStorage.getItem('token') || '',
         },
         params,
       })
       .pipe(
-        map((res: Pagination) => {
-          const users = res.users.map(
+        map((res: Pagination<User>) => {
+          const users = res.data.map(
             (user: User) =>
               new User(
                 user.name,
@@ -34,7 +34,7 @@ export class UserService {
                 user.role
               )
           );
-          res.users = users;
+          res.data = users;
           return res;
         })
       );

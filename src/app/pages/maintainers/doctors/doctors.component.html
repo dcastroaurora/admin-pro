@@ -1,13 +1,29 @@
 <div class="row animated fadeIn fast">
   <div class="col-12">
     <div class="card">
-      <div class="card-body">
-        <input type="text" class="form-control" placeholder="Search user" />
+      <div class="card-body input-form">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search doctor"
+            [(ngModel)]="name"
+          />
+          <span class="input-group-btn">
+            <button
+              class="btn btn-success"
+              type="button"
+              (click)="getDoctors()"
+            >
+              Search
+            </button>
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<div class="row fadeIn fast">
+<div class="row fadeIn fast" *ngIf="loading">
   <div class="col-12">
     <div class="alert alert-info text-center">
       <h4 class="alert-heading">Loading...</h4>
@@ -20,34 +36,66 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">User List</h4>
+        <h4 class="card-title">Doctor List</h4>
+        <div class="m-t-40">
+          <div class="d-flex">
+            <div class="ml-auto">
+              <div class="form-group">
+                <a
+                  type="button"
+                  class="btn btn-success"
+                  routerLink="/dashboard/doctors/new"
+                >
+                  <i class="fa fa-plus"></i> Add New Doctor
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
               <tr>
                 <th>Picture</th>
-                <th>Email</th>
                 <th>Name</th>
-                <th>Role</th>
-                <th>Auth</th>
+                <th>Hospital</th>
                 <th class="text-nowrap">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Tantas earum numeris</td>
-                <td>Tantas earum numeris</td>
-                <td>Tantas earum numeris</td>
-                <td>Tantas earum numeris</td>
-                <td>Tantas earum numeris</td>
-                <td class="text-nowrap">
-                  <a href="#" data-toggle="tooltip" data-original-title="Edit">
+              <tr
+                *ngFor="
+                  let doctor of doctors
+                    | paginate
+                      : {
+                          itemsPerPage: pageSize,
+                          currentPage: page,
+                          totalItems: count
+                        }
+                "
+              >
+                <td>
+                  <img
+                    [src]="doctor.image | image: 'doctor'"
+                    class="picture cursor"
+                    (click)="openModal(doctor)"
+                  />
+                </td>
+                <td>{{ doctor.name }}</td>
+                <td>{{ doctor.hospitalId }}</td>
+                <td class="text-nowrap text-center">
+                  <a
+                    [routerLink]="['/dashboard', 'doctors', doctor.id]"
+                    data-toggle="tooltip"
+                    data-original-title="Edit"
+                  >
                     <i class="fa fa-pencil text-inverse m-r-10"></i>
                   </a>
                   <a
-                    href="#"
                     data-toggle="tooltip"
                     data-original-title="delete"
+                    (click)="deleteDoctor(doctor)"
+                    class="cursor"
                   >
                     <i class="fa fa-close text-danger"></i>
                   </a>
@@ -56,7 +104,27 @@
             </tbody>
           </table>
         </div>
-        <!-- <button class="btn btn-secondary">Next</button> -->
+        <div class="row">
+          <div class="col-md-3">
+            <select
+              class="form-control custom-select"
+              (change)="handlePageSizeChange($event)"
+            >
+              <option value="0">Items per Page</option>
+              <option *ngFor="let size of pageSizes" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-9">
+            <pagination-controls
+              previusLabel="Prev"
+              nextLabel="Next"
+              responsive="true"
+              (pageChange)="handlePageChange($event)"
+            ></pagination-controls>
+          </div>
+        </div>
       </div>
     </div>
   </div>

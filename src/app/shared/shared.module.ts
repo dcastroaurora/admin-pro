@@ -9,6 +9,7 @@ import { GraphComponent } from './components/graph/graph.component';
 import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { ImageModalComponent } from './components/image-modal/image-modal.compon
     GraphComponent,
     ImageModalComponent,
   ],
-  imports: [CommonModule, RouterModule, FormsModule, ChartsModule],
+  imports: [CommonModule, RouterModule, FormsModule, ChartsModule, PipesModule],
   exports: [
     BreadcrumbsComponent,
     SidebarComponent,

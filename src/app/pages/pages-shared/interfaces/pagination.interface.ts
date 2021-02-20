@@ -1,8 +1,7 @@
-import { User } from 'src/app/auth/auth-shared/models/user.model';
-
-export interface Pagination {
+export interface Pagination<T> {
   currentPage: number;
   totalItems: number;
   totalPages: number;
-  users: User[];
+  data: T[];
+  message: string;
 }

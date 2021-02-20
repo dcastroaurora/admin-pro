@@ -30,3 +30,7 @@
   width: 100%;
   z-index: 999;
 }
+
+.has-danger .input-group-addon {
+  border-color: #ef5350;
+}

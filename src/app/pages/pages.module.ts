@@ -14,6 +14,8 @@ import { DoctorsComponent } from './maintainers/doctors/doctors.component';
 import { HospitalsComponent } from './maintainers/hospitals/hospitals.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PipesModule } from '../shared/pipes/pipes.module';
+import { DoctorComponent } from './maintainers/doctors/doctor/doctor.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UsersComponent,
     DoctorsComponent,
     HospitalsComponent,
+    DoctorComponent,
   ],
   imports: [
     CommonModule,
@@ -35,12 +38,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
+    PipesModule,
   ],
-  // exports: [
-  //   ProgressComponent,
-  //   DashboardComponent,
-  //   Grafica1Component,
-  //   PagesComponent,
-  // ],
 })
 export class PagesModule {}
