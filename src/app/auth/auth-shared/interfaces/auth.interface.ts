@@ -4,4 +4,5 @@ export interface IAuth {
   user: User;
   token: string;
   message: string;
+  menu: [];
 }

@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { DoctorComponent } from './maintainers/doctors/doctor/doctor.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DoctorComponent } from './maintainers/doctors/doctor/doctor.component';
     DoctorsComponent,
     HospitalsComponent,
     DoctorComponent,
+    SearchComponent,
   ],
   imports: [
     CommonModule,

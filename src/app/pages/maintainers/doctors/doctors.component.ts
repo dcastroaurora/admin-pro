@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ImageModalService } from 'src/app/shared/providers/image-modal.service';
 import Swal from 'sweetalert2';
-import { IDoctor } from '../../pages-shared/interfaces/doctor.interface';
 import { Pagination } from '../../pages-shared/interfaces/pagination.interface';
 import { Doctor } from '../../pages-shared/models/doctor.model';
 import { DoctorService } from '../../pages-shared/providers/maintainers/doctor/doctor.service';
@@ -95,6 +94,4 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   openModal(doctor: Doctor) {
     this.imageModalService.openModal('doctor', doctor.image, doctor.id);
   }
-
-  createHospital() {}
 }

@@ -42,7 +42,7 @@ export class AuthService {
       .post<IAuth>(`${environment.base_url}/auth/login`, data)
       .pipe(
         tap((res: IAuth) => {
-          localStorage.setItem('token', res.token);
+          this.saveLocalStorage(res);
         })
       );
   }
@@ -52,13 +52,17 @@ export class AuthService {
       .post<IAuth>(`${environment.base_url}/auth/google`, { token })
       .pipe(
         tap((res: IAuth) => {
-          localStorage.setItem('token', res.token);
+          this.saveLocalStorage(res);
         })
       );
   }
 
-  get token() {
+  get token(): string {
     return localStorage.getItem('token') || '';
+  }
+
+  get role(): string {
+    return this.user.role || '';
   }
 
   validateToken(): Observable<boolean> {
@@ -72,7 +76,7 @@ export class AuthService {
         map((res: IAuth) => {
           const { email, google, id, image, name, role } = res.user;
           this.user = new User(name, email, id, '', image, google, role);
-          localStorage.setItem('token', res.token);
+          this.saveLocalStorage(res);
           return true;
         }),
         catchError(() => of(false))
@@ -81,6 +85,8 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
+
     this.auth2.signOut().then(() => {
       this.ngZone.run(() => {
         this.router.navigateByUrl('/login');
@@ -91,7 +97,7 @@ export class AuthService {
   createUser(data: User): Observable<IAuth> {
     return this.http.post<IAuth>(`${environment.base_url}/user`, data).pipe(
       tap((res: IAuth) => {
-        localStorage.setItem('token', res.token);
+        this.saveLocalStorage(res);
       })
     );
   }
@@ -106,5 +112,10 @@ export class AuthService {
         },
       }
     );
+  }
+
+  saveLocalStorage(response: IAuth) {
+    localStorage.setItem('token', response.token);
+    localStorage.setItem('menu', JSON.stringify(response.menu));
   }
 }

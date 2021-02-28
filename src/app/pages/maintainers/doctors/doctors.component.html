@@ -58,7 +58,6 @@
               <tr>
                 <th>Picture</th>
                 <th>Name</th>
-                <th>Hospital</th>
                 <th class="text-nowrap">Actions</th>
               </tr>
             </thead>
@@ -82,7 +81,6 @@
                   />
                 </td>
                 <td>{{ doctor.name }}</td>
-                <td>{{ doctor.hospitalId }}</td>
                 <td class="text-nowrap text-center">
                   <a
                     [routerLink]="['/dashboard', 'doctors', doctor.id]"

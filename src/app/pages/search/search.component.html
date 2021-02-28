@@ -1,0 +1,202 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h3>Users</h3>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Picture</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Auth</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let user of users
+                    | paginate
+                      : {
+                          id: 'user',
+                          itemsPerPage: pageSizeUser,
+                          currentPage: pageUser,
+                          totalItems: countUser
+                        }
+                "
+              >
+                <td>
+                  <img
+                    [src]="user.image | image: 'user'"
+                    class="picture cursor"
+                  />
+                </td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.name }}</td>
+                <td>
+                  {{ user.role }}
+                </td>
+                <td>
+                  <span *ngIf="user.google" class="label label-danger"
+                    >Google</span
+                  ><span *ngIf="!user.google" class="label label-info"
+                    >Email</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <select
+              class="form-control custom-select"
+              (change)="handlePageSizeChangeUser($event)"
+            >
+              <option value="0">Items per Page</option>
+              <option *ngFor="let size of pageSizes" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-9">
+            <pagination-controls
+              id="user"
+              previusLabel="Prev"
+              nextLabel="Next"
+              responsive="true"
+              (pageChange)="handlePageChangeUser($event)"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h3>Doctors</h3>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Picture</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let doctor of doctors
+                    | paginate
+                      : {
+                          id: 'doctor',
+                          itemsPerPage: pageSizeDoctor,
+                          currentPage: pageDoctor,
+                          totalItems: countDoctor
+                        }
+                "
+              >
+                <td>
+                  <img
+                    [src]="doctor.image | image: 'doctor'"
+                    class="picture cursor"
+                  />
+                </td>
+                <td>{{ doctor.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <select
+              class="form-control custom-select"
+              (change)="handlePageSizeChangeDoctor($event)"
+            >
+              <option value="0">Items per Page</option>
+              <option *ngFor="let size of pageSizes" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-9">
+            <pagination-controls
+              id="doctor"
+              previusLabel="Prev"
+              nextLabel="Next"
+              responsive="true"
+              (pageChange)="handlePageChangeDoctor($event)"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h3>Hospitals</h3>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Picture</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let hospital of hospitals
+                    | paginate
+                      : {
+                          id: 'hospital',
+                          itemsPerPage: pageSizeHospital,
+                          currentPage: pageHospital,
+                          totalItems: countHospital
+                        }
+                "
+              >
+                <td>
+                  <img
+                    [src]="hospital.image | image: 'hospital'"
+                    alt="hospital.name"
+                    class="picture cursor"
+                  />
+                </td>
+                <td>
+                  {{ hospital.name }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <select
+              class="form-control custom-select"
+              (change)="handlePageSizeChangeHospital($event)"
+            >
+              <option value="0">Items per Page</option>
+              <option *ngFor="let size of pageSizes" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-9">
+            <pagination-controls
+              id="hospital"
+              previusLabel="Prev"
+              nextLabel="Next"
+              responsive="true"
+              (pageChange)="handlePageChangeHospital($event)"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
